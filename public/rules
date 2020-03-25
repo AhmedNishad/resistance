@@ -1,0 +1,17 @@
+As many people as who are on
+We have a way to assign who is who (Random assignment of roles)
+Interface for that
+We a mission storage thingy
+We have voting
+We have cards
+
+logic 
+if more passed then the resistance team wins otherwise spies wins
+Figure out a way to do RTC chat perhaps {Unimportant}
+
+game state
+missions
+passed, failed
+
+firebase backend
+store who's joined the game

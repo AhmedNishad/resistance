@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+body{
+	font-family: 'Roboto', sans-serif;
+	font-size: medium;
+}
+
+.deck
+{
+	width:50%;
+	margin: 20px auto;
+	background:dodgerblue;
+	border:solid 10px black;
+	padding: 10px;
+	border-radius:10px;
+	text-align: center;
+	color:white;
+}
+
+#cardRandom{
+    width: 226px;
+    height: 314px;
+    transition: 0.2s;
+
+}
+
+#cardRandom:hover{
+    width: 256px;
+    height: 370px;
+}
+
+.card
+{
+	width: 80%;
+	padding: 10px;
+	border: solid 1px #808080;
+	background-color: white;
+	display: inline-block;
+	border-radius: 10px;
+	font-size: 14pt;
+	text-align: center;
+	color:black;
+	margin: 3px;
+}
+
+.selected
+{
+	background-color: rgb(121, 255, 116);
+}
+
+.image{
+	width: 226px;
+    height: 314px;
+    transition: 0.2s;
+}
+
+.image:hover{
+	width: 256px;
+    height: 370px;
+}
+
+.btn
+{
+	background:white;
+	padding: 10px 20px;
+	border-radius:30px;
+	margin: 10px;
+	display:inline-block;
+}
+
+.card .value{
+	font-size:15pt;
+	font-family: sans-serif;
+}
+
+.card .suit
+{
+	background-image: url('card.png');
+	height: 100px;
+	width: 90px;
+}
+
+.card .diamonds
+{
+	background-position-y: 100px;
+}
+
+.card .hearts
+{
+	background-position-x: 90px;
+}
+
+.card .clubs
+{
+	background-position-x:90px;
+	background-position-y:100px;
+}
+               

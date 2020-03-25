@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bulma.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>Resistance Bitches!</title>
+</head>
+<body>
+    <!-- <div class="deck">
+        <h1>A Deck of Cards</h1>
+
+        <a href="javascript:void(0)" class="btn" onclick="shuffle()">Shuffle</a>
+        <div id="deck"></div>
+    </div> -->
+    <div class="container">
+
+    
+        <div class="notification">
+            <h3 id="error" class="has-text-danger"></h3>
+            <h2 id="message">Fun Time! 😊</h2>
+        </div>
+        <img class="image" id="meme2" style="display:none"/>
+        <img class="image" id="meme3" style="display:none"/>
+        <div class="container is-fluid" id="stage">
+            <div id="join-room">
+                <!-- <label for="name">Name</label> <br> -->
+                <input class="input is-info"" id="username" placeholder="name..."  type="text" />
+                <button id="join-btn" class="button is-primary" onclick="joinGame()">Join Game</button>
+            </div>
+
+            <div id="pregame">
+                <button id="startBtn" disabled onclick="startGame()" class="button is-default">Start</button>
+            </div>
+
+            <div id="assign-roles">
+                <img id="assigned-img" alt="You have been assigned">
+                <!-- <button onclick="confirmRole()" class="button is-default">Continue</button> -->
+            </div>
+
+            <div id="nominate-operatives">
+                <div id="nominate-operatives-nominator">
+                    <button id="nomianateBtn" disabled onclick='submitNomination()' class="button is-primary">Nominate Operatives</button> <br>
+                </div>
+                <div id="nominate-operatives-voters">
+                    <!-- <span id="nominator">...</span> is nominating -->
+                    <img class="image" id="meme"/>
+                </div>
+            </div>
+
+            <div id="vote">
+                <button onclick="voteFor()" class="button is-success">Accept</button>
+                <button onclick="voteAgainst()" class="button is-danger">Reject</button>
+            </div>
+
+            <div id="mission">
+                
+            </div>
+
+            <div id="mission-outcome">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title" id="outcome">
+                          Team
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        Spies - <span id="wincount_s"></span>  <br>
+                        Resistance - <span id="wincount_r"></span> <br>
+                    </div>
+                </div>
+                
+                <!-- <button onclick="confirmOutcome()" class="button is-success">Continue</button> -->
+            </div>
+
+            <div id="end-game">
+                <div class="card">
+                    
+                    <div class="card-content">
+                        Spies - <span id="wincount_se"></span> <br>
+                        Resistance - <span id="wincount_re"></span>
+                    </div>
+
+                    <div class="card-footer">
+                        <button onclick="playAgain()" class='button is-primary'>Play Again</button>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+
+        <div id="spychat">
+
+        </div>
+
+    </div>
+
+    <script src="cards.js"></script>
+    <script src="../socket.io/socket.io.js"></script>
+    <script src="main.js"></script>
+
+</body>
+</html>
