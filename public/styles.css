@@ -5,6 +5,19 @@ body{
 	font-size: medium;
 }
 
+*{
+	margin: 5px;
+}
+
+#cont{
+	margin: 15px;
+	padding: 10px;
+}
+
+#join-btn{
+	margin: 5px;
+}
+
 .deck
 {
 	width:50%;

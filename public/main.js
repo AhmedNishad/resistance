@@ -23,7 +23,7 @@ let state = {
     number_online: 0,
     spies_count: 0,
     round: 1,
-    round_operatives: [2,3,3,3,4],
+    round_operatives: [2,3,4,3,4],
     resistance_count: 0,
     spies_win: 0,
     resistance_win: 0,
@@ -32,7 +32,7 @@ let state = {
     },
     nominations: [],
     nominator: 'jana',
-    players: ['shara', 'imaad', 'nishad', 'jana', 'dino', 'adee'],
+    players: [],
     stage: 'prejoin',
     assignedRole: '',
     assignedRoleImg : '',
@@ -94,10 +94,10 @@ socket.on('game_start', e=>{
     console.log("starting game");
     if(!joined)
         return;
-    console.log(e.spies);
+    //console.log(e.spies);
     message.innerText = ""
     state.stage = 'assign_roles';
-    e.spies = ["imad", "trevin" ,"hari"];
+    //e.spies = ["imad", "trevin" ,"hari"];
     state.players = e.players;
     if(e.spies.includes(userName)){
         randomizeCard('s');
