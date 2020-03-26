@@ -14,11 +14,18 @@ var asyncFunc = ()=>{
 max_players = 8;
 
 let calcSpies = (playerCount)=>{
-    return Math.floor(playerCount/2 - 1)
+    let spies = Math.floor(playerCount/2 - 1)
+    if(playerCount == 5){
+        spies = 2;
+    }
+    if(playerCount == 7){
+        spies = 3;
+    }
+    return spies;
 }
 
 let isMajority = (val, from)=>{
-    //console.log(Math.floor(from/2) + " , " + val);
+    console.log(Math.floor(from/2) + " , " + val);
     if(Math.floor(from/2) < val){
         return true;
     }else{
@@ -64,6 +71,9 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
 });
 
+app.get('/test', function(req, res){
+    res.sendFile(__dirname + '/public/test.html');
+  });
 io.on('connection', function(socket){
   
   state.number_online++;
@@ -75,7 +85,7 @@ io.on('connection', function(socket){
         state.players = state.players.filter(p => p != player);
         state.ongoing = false;
         console.log(player + " has disconnected");
-        io.emit("disconnect", `${player} has disconnected`);
+        io.emit("disconnect", `${player} `);
         clearInterval(asyncFunc);
         state.round = 0;
         state.wins = 0;
@@ -157,21 +167,30 @@ io.on('connection', function(socket){
           state.votesAgainst += 1;
       }
       let totalVotes = state.votesFor + state.votesAgainst;
-      if(totalVotes == state.players.length){
+     // if(totalVotes == state.players.length){
           if(isMajority(state.votesFor, state.players.length)){
               io.emit('voting_completed', {
                 success: true,
                 operatives: state.nominations
               })
-          }else{
+              state.votesFor = 0;
+              state.votesAgainst = 0;
+          }else if(isMajority(state.votesAgainst, state.players.length)){
             io.emit('voting_completed', {
                 success: false,
                 next: state.players[nominatedLast]
               })
+              state.votesFor = 0;
+              state.votesAgainst = 0;
+          }else if(totalVotes == state.players.length){
+            io.emit('voting_completed', {
+                success: false,
+                next: state.players[nominatedLast]
+              })
+              state.votesFor = 0;
+             state.votesAgainst = 0;
           }
-          state.votesFor = 0;
-          state.votesAgainst = 0;
-      }
+    //  }
   })
 
   socket.on("pass_mission", e=>{
@@ -210,7 +229,7 @@ io.on('connection', function(socket){
       let _rounds = state.round;
       let _losses = Math.abs(_wins - (_rounds - 1));
       // If it goes 2- 2
-      if(_rounds == 5 || isMajority(_wins, 5) || isMajority(_losses, 5)){
+      if(_rounds == 6 || isMajority(_wins, 5) || isMajority(_losses, 5)){
           let won = true;
           state.ongoing = false;
           state.players = [];

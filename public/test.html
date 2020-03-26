@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing</title>
+    <link rel="stylesheet" href="bulma.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <button class="button is-primary" disabled id="nomianateBtn">Nominate</button>
+    <div id="test-listeners">
+
+    </div>
+
+    <button onclick="refresh()" id="refresh">Refresh</button>
+    <script>
+        let cont = document.getElementById("test-listeners");
+
+
+        
+        state = {
+            nominations: [],
+            players: ["shara", "jana", "nishad", "hari", "imad"]
+        }
+        let addNomination = e => {
+            let opCount = 3;
+            let nom = e.target.innerText
+            if(state.nominations.includes(nom)){
+                let i = state.nominations.indexOf(nom)
+                state.nominations.splice(i, 1);
+                e.target.classList.remove('selected')
+            }else{
+                let maxOperatives = 3 
+                if(state.nominations.length == maxOperatives)
+                    return
+                state.nominations.push(nom);
+                e.target.classList.add('selected')
+            }
+            if(state.nominations.length == opCount){
+                document.getElementById('nomianateBtn').disabled = false;
+            }else{
+                document.getElementById('nomianateBtn').disabled = true;
+            }
+        }
+
+        function refresh(){
+            state.nominations = []
+            removeListenersAndClearChildren(cont, addNomination)
+            state.players.forEach(p => {
+            if(p == 'nishad')
+                return;
+            let playerCard = document.createElement('div');
+            playerCard.classList.add('card');
+            playerCard.addEventListener('click', addNomination);
+            playerCard.innerText = p
+            cont.appendChild(playerCard);
+        })
+        }
+        refresh();
+
+        function removeListenersAndClearChildren(e, listener){
+            var child = e.lastElementChild;
+            while (child) { 
+                if(child.tagName == "BUTTON" || child.tagName == "BR" || child.id == 'meme3' || child.id == 'meme2')
+                    break;
+                if(listener != null)
+                    child.removeEventListener('click', listener);  
+                e.removeChild(child); 
+                child = e.lastElementChild; 
+            } 
+        }
+
+        
+    </script>
+</body>
+</html>

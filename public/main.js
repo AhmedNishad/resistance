@@ -71,7 +71,15 @@ socket.on("player_join", e=>{
         message.innerText = "Online: " + e.players.length;
     }else if(state.stage = 'pregame'){
        // e.players.forEach(p => {message.innerText += '| ' + p;})
-        message.innerText += e.players + " are online. \n"
+       let otherPlayers = e.players.map(p => 
+        {
+            if(p != userName){
+                return p;
+            }else{
+                return "You"
+            }
+        });
+        message.innerText += otherPlayers + " are online. \n"
     }
     if(state.stage == 'pregame'){
         if(e.players.length < 5){
@@ -336,6 +344,9 @@ socket.on('game_end', e=>{
     }
     document.getElementById('wincount_re').innerText = e.wins;
     document.getElementById('wincount_se').innerText = Math.abs(e.wins - (e.rounds - 1));
+    let cont = document.getElementById('nominate-operatives-nominator');
+    removeListenersAndClearChildren(cont, addNomination);
+    state.nominations = []
     renderStage();
     joined = false;
     startedGame = false;
@@ -403,7 +414,6 @@ function showChild(id, container){
 renderStage();
 
 function removeListenersAndClearChildren(e, listener){
-    
     var child = e.lastElementChild;
     while (child) { 
         if(child.tagName == "BUTTON" || child.tagName == "BR" || child.id == 'meme3' || child.id == 'meme2')
