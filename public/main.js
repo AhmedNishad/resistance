@@ -63,8 +63,7 @@ socket.on("player_join", e=>{
     
     if(state.stage == 'end_game')
         return;
-    if(startedGame)
-        return;
+    
     message.innerText = ""
     console.log("Player joined " + e.players)
     if(!joined){
@@ -98,6 +97,13 @@ socket.on("room_full", e=>{
     joined = false;
 })
 
+socket.on("timeout", e=>{
+    message.innerText("Game session expired due to inactivity");
+    state.stage = 'pregame';
+    startGame = false;
+    renderStage()
+})
+
 socket.on('game_start', e=>{
     console.log("starting game");
     if(!joined)
@@ -105,8 +111,10 @@ socket.on('game_start', e=>{
     //console.log(e.spies);
     message.innerText = ""
     state.stage = 'assign_roles';
+    state.round = 1;
     //e.spies = ["imad", "trevin" ,"hari"];
     state.players = e.players;
+    state.round_operatives = e.operatives
     if(e.spies.includes(userName)){
         randomizeCard('s');
         let otherSpies = e.spies.filter(s => s != userName)
@@ -314,9 +322,11 @@ socket.on('mission_complete', e=>{
     let outcome = document.getElementById('outcome');
     if(e.success){
         outcome.innerText = "Passed!";
+        outcome.classList.remove("has-text-danger")
         outcome.classList.add("has-text-success");
     }else{
         outcome.innerText = "Failed!";
+        outcome.classList.remove("has-text-success")
         outcome.classList.add("has-text-danger")
     }
     document.getElementById('wincount_r').innerText = e.wins;
@@ -334,7 +344,6 @@ function confirmOutcome(){
 }
 
 socket.on('game_end', e=>{
-    state.round = 1;
     state.stage = 'end_game';
     message.innerText = `In ${e.rounds - 1} rounds,\n`
     if(e.won){
@@ -353,10 +362,13 @@ socket.on('game_end', e=>{
 })
 
 socket.on('disconnect', e=>{
+    hideMemes();
     if(!joined || state.stage == 'end_game' || state.stage=='pregame')
         return
     showErr(`Game stopped, ${e} has left`)
     state.stage = 'pregame';
+    state.round = 1;
+    startedGame = false;
     renderStage();
 })
 
@@ -430,6 +442,23 @@ function showErr(message){
     error.innerText = message;
     setTimeout(()=>{
         error.style.display = 'none'; 
-    },3000)
+    },6000)
+}
 
+function hideMemes(){
+    try{
+        document.getElementById('meme').style.display = 'none'
+    }catch(err){
+        console.log(err)
+    }
+    try{
+        document.getElementById('meme2').style.display = 'none'
+    }catch(err){
+        console.log(err)
+    }
+    try{
+        document.getElementById('meme3').style.display = 'none'
+    }catch(err){
+        console.log(err)
+    }
 }

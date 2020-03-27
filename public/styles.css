@@ -2,11 +2,12 @@
 
 body{
 	font-family: 'Roboto', sans-serif;
-	font-size: medium;
+	
 }
 
 *{
 	margin: 5px;
+	font-size: x-large;
 }
 
 #cont{
@@ -15,8 +16,10 @@ body{
 }
 
 #join-btn{
-	margin: 5px;
+	margin: 15px;
 }
+
+
 
 .deck
 {
@@ -53,12 +56,12 @@ body{
 	font-size: 14pt;
 	text-align: center;
 	color:black;
-	margin: 3px;
+	margin: 5px 5px;
 }
 
 .selected
 {
-	background-color: rgb(121, 255, 116);
+	background-color: rgb(167, 255, 164);
 }
 
 .image{
@@ -108,4 +111,15 @@ body{
 	background-position-x:90px;
 	background-position-y:100px;
 }
-               
+			   
+#mission-outcome{
+	font-size: large;
+}
+
+#end-game{
+	font-size: large;
+}
+
+#nomianateBtn{
+	margin: 10px;
+}

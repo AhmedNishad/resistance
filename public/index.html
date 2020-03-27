@@ -26,12 +26,12 @@
         <div class="container is-fluid" id="stage">
             <div id="join-room">
                 <!-- <label for="name">Name</label> <br> -->
-                <input class="input is-info"" id="username" placeholder="name..."  type="text" />
-                <button id="join-btn" class="button is-primary" onclick="joinGame()">Join Game</button>
+                <input class="input is-info is-medium"" id="username" placeholder="name..."  type="text" />
+                <button id="join-btn" class="button is-primary is-large" onclick="joinGame()">Join Game</button>
             </div>
 
             <div id="pregame">
-                <button id="startBtn" disabled onclick="startGame()" class="button is-default">Start</button>
+                <button id="startBtn" disabled onclick="startGame()" class="button is-default is-large">Start</button>
             </div>
 
             <div id="assign-roles">
@@ -41,7 +41,7 @@
 
             <div id="nominate-operatives">
                 <div id="nominate-operatives-nominator">
-                    <button id="nomianateBtn" disabled onclick='submitNomination()' class="button is-primary">Nominate Operatives</button> <br>
+                    <button id="nomianateBtn" disabled onclick='submitNomination()' class="button is-primary is-large">Nominate Operatives</button> <br>
                 </div>
                 <div id="nominate-operatives-voters">
                     <!-- <span id="nominator">...</span> is nominating -->
@@ -50,8 +50,8 @@
             </div>
 
             <div id="vote">
-                <button onclick="voteFor()" class="button is-success">Accept</button>
-                <button onclick="voteAgainst()" class="button is-danger">Reject</button>
+                <button onclick="voteFor()" class="button is-success is-large">Accept</button>
+                <button onclick="voteAgainst()" class="button is-danger is-large">Reject</button>
             </div>
 
             <div id="mission">

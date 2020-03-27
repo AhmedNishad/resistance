@@ -11,7 +11,7 @@ var asyncFunc = ()=>{
 
 }
 
-max_players = 8;
+max_players = 10;
 
 let calcSpies = (playerCount)=>{
     let spies = Math.floor(playerCount/2 - 1)
@@ -20,6 +20,9 @@ let calcSpies = (playerCount)=>{
     }
     if(playerCount == 7){
         spies = 3;
+    }
+    if(playerCount == 9){
+        spies = 4
     }
     return spies;
 }
@@ -81,14 +84,21 @@ io.on('connection', function(socket){
       if(socket.playerName){
         var i = allClients.indexOf(socket);
         console.log(i)
-        let player = state.players[i];
+        let player = socket.playerName;
         state.players = state.players.filter(p => p != player);
         state.ongoing = false;
         console.log(player + " has disconnected");
         io.emit("disconnect", `${player} `);
         clearInterval(asyncFunc);
-        state.round = 0;
+        state.round = 1;
         state.wins = 0;
+        state.ready = 0;
+        state.votesFor = 0;
+        state.votesAgainst = 0;
+        state.current_mission = {
+            pass: 0,
+            fail : 0
+        }
         setTimeout(()=>{
             io.emit('player_join', {
                 players: state.players
@@ -102,40 +112,56 @@ io.on('connection', function(socket){
   })
 
   socket.on('join_game', player=>{
-      allClients.push(socket);
-      if(state.players.length > max_players){
+        if(player.length == 0){
+            socket.emit('room_full', "You may not be unnamed!")
+            return;
+        }
+
+        if(state.players.length == max_players){
           socket.emit('room_full', "Game is full")
           return;
-      }
-
-      if(state.players.includes(player)){
-        socket.emit('room_full', "Player already exists")
-        return;
-      }
-
-      if(state.ongoing){
-        socket.emit('room_full', "Game is ongoing, wait for it to end");
-        return;
-      }
-      socket.playerName = player;
-      state.players.push(player);
-      io.emit('player_join', {
-          players: state.players
-      });
+        }
+        
+        if(state.players.includes(player)){
+            socket.emit('room_full', "Player already exists")
+            return;
+        }
+      
+        if(state.ongoing){
+            socket.emit('room_full', "Game is ongoing, wait for it to end");
+            return;
+        }
+        console.log(player + " has joined");
+        socket.playerName = player;
+        allClients.push(socket);
+        state.players.push(player);
+        io.emit('player_join', {
+            players: state.players
+        });
+        state.ready = 0;
   })
 
   socket.on('start_game', e=> {
       state.ready += 1;
       if(state.ready == state.players.length){
+          if(state.players.length == 5){
+              state.round_operatives[2] = 3;
+              state.round_operatives[4] = 3;
+          }else{
+            state.round_operatives[2] = 4;
+            state.round_operatives[4] = 4;
+          }
           console.log("Game starting");
           let spies = shuffle(state.players).slice(0,calcSpies(state.players.length));
           io.emit('game_start', {
+              operatives: state.round_operatives,
               spies,
               players: state.players
           });
           asyncFunc = setTimeout(()=>{
             io.emit('get_nominations', state.players[nominatedLast]);
             }, 3500);
+          
           // change to 0
           state.ready = 0;
           state.ongoing = true;
