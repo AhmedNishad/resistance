@@ -26,11 +26,12 @@
         <div class="container is-fluid" id="stage">
             <div id="join-room">
                 <!-- <label for="name">Name</label> <br> -->
-                <input class="input is-info is-medium"" id="username" placeholder="name..."  type="text" />
+                <input autocomplete="off" class="input is-info is-medium"" id="username" placeholder="name..."  type="text" />
                 <button id="join-btn" class="button is-primary is-large" onclick="joinGame()">Join Game</button>
             </div>
 
             <div id="pregame">
+                <div id="otherPlayers"></div>
                 <button id="startBtn" disabled onclick="startGame()" class="button is-default is-large">Start</button>
             </div>
 

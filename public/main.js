@@ -78,14 +78,25 @@ socket.on("player_join", e=>{
                 return "You"
             }
         });
-        message.innerText += otherPlayers + " are online. \n"
+        let cont = document.getElementById('otherPlayers')
+        cont.innerHTML = ""
+        otherPlayers.forEach(p => {
+            let tag = document.createElement('span');
+            tag.classList.add("tag")
+            tag.classList.add("is-info")
+            tag.classList.add("is-large")
+            tag.innerText = p
+            cont.appendChild(tag)
+        })
+       // message.innerText += otherPlayers + " are online. \n"
     }
     if(state.stage == 'pregame'){
         if(e.players.length < 5){
             document.getElementById('startBtn').disabled = true;
-            message.innerText += "" + (5 - e.players.length) + " players needed";
+            message.innerText += "" + (5 - e.players.length) + " more needed";
         }else{
             document.getElementById('startBtn').disabled = false;
+            message.innerText = "Ready to play!"
         }
     }
     renderStage();
@@ -185,6 +196,7 @@ function nominateOperatives(){
         showChild('nominate-operatives-nominator', document.getElementById('nominate-operatives'))
     }else{
         message.innerText += state.nominator += " is nominating";
+        document.getElementById('meme').style.display = 'block';
         fetch("https://meme-api.herokuapp.com/gimme/dankmemes/2").then(r=> r.json()).then(d => 
         document.getElementById('meme').src = d.memes[0].url ).catch(e=> console.log(e));
         showChild('nominate-operatives-voters', document.getElementById('nominate-operatives'))
