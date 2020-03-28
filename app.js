@@ -145,7 +145,7 @@ io.on('connection', function(socket){
       state.ready += 1;
       if(state.ready == state.players.length){
           if(state.players.length == 5){
-              state.round_operatives[2] = 3;
+              state.round_operatives[2] = 2;
               state.round_operatives[4] = 3;
           }else{
             state.round_operatives[2] = 4;
