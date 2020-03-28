@@ -185,8 +185,7 @@ function nominateOperatives(){
        // cont.innerHTML =  "<button id='nomianateBtn' disabled onclick='submitNomination()' class='button is-primary'>Nominate Operatives</button> <br>";
         message.innerText = `Select ${opCount} players for mission`
         state.players.forEach(p => {
-            if(p == userName)
-                return;
+            
             let playerCard = document.createElement('div');
             playerCard.classList.add('card');
             playerCard.addEventListener('click', addNomination);
@@ -341,6 +340,7 @@ socket.on('mission_complete', e=>{
         outcome.classList.remove("has-text-success")
         outcome.classList.add("has-text-danger")
     }
+   // message.innerText = `Black cards ${e.wins}`
     document.getElementById('wincount_r').innerText = e.wins;
     document.getElementById('wincount_s').innerText = Math.abs(e.wins - (e.round-1));
     state.stage = "mission_outcome";
